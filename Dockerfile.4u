@@ -1,0 +1,9 @@
+FROM local/hermes-sandbox:codex-0.160.0
+USER root
+WORKDIR /opt/hermes-webui
+COPY . /opt/hermes-webui/
+RUN uv pip install --python /opt/hermes/.venv/bin/python -r requirements.txt
+ENV HERMES_WEBUI_AGENT_DIR=/opt/hermes HERMES_WEBUI_HOST=0.0.0.0 HERMES_WEBUI_PORT=8787 PYTHONDONTWRITEBYTECODE=1
+USER 10000:10000
+ENTRYPOINT ["/opt/hermes/.venv/bin/python"]
+CMD ["/opt/hermes-webui/server.py"]
